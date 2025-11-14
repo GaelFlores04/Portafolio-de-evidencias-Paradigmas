@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es-mx">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Instalación del entorno de desarrollo Haskell | Blog de Gael</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Reporte sobre la instalación del entorno de desarrollo Haskell utilizando GHCup, y análisis de la aplicación TODO en Haskell.">
+    <meta name="generator" content="Hugo 0.152.2">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    <meta name="author" content="Gael Flores Cañedo">
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+
+    
+
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/posts/instalacion-haskell/">
+    
+
+    <meta property="og:url" content="http://localhost:1313/posts/instalacion-haskell/">
+  <meta property="og:site_name" content="Blog de Gael">
+  <meta property="og:title" content="Instalación del entorno de desarrollo Haskell">
+  <meta property="og:description" content="Reporte sobre la instalación del entorno de desarrollo Haskell utilizando GHCup, y análisis de la aplicación TODO en Haskell.">
+  <meta property="og:locale" content="es_mx">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-11-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-11-07T00:00:00+00:00">
+    <meta property="article:tag" content="Haskell">
+    <meta property="article:tag" content="GHCup">
+    <meta property="article:tag" content="Instalación">
+    <meta property="article:tag" content="Programación Funcional">
+
+  <meta itemprop="name" content="Instalación del entorno de desarrollo Haskell">
+  <meta itemprop="description" content="Reporte sobre la instalación del entorno de desarrollo Haskell utilizando GHCup, y análisis de la aplicación TODO en Haskell.">
+  <meta itemprop="datePublished" content="2025-11-07T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-11-07T00:00:00+00:00">
+  <meta itemprop="wordCount" content="623">
+  <meta itemprop="keywords" content="Haskell,GHCup,Instalación,Programación Funcional">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Instalación del entorno de desarrollo Haskell">
+  <meta name="twitter:description" content="Reporte sobre la instalación del entorno de desarrollo Haskell utilizando GHCup, y análisis de la aplicación TODO en Haskell.">
+
+	
+  </head><body class="ma0 avenir bg-near-white development">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l center items-center justify-between">
+    <a href="/" class="f3 fw2 hover-white white-90 dib no-underline">
+      
+        Blog de Gael
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  
+  <article class="flex-l mw8 center ph3 flex-wrap justify-between">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Posts
+      </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">Instalación del entorno de desarrollo Haskell</h1>
+      
+      <p class="tracked"><strong>Gael Flores Cañedo</strong>
+      </p>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2025-11-07T00:00:00Z">November 7, 2025</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><h1 id="instalación-del-entorno-de-desarrollo-haskell">Instalación del entorno de desarrollo Haskell</h1>
+<h2 id="introducción">Introducción</h2>
+<p>Haskell es un lenguaje de programación <strong>puramente funcional</strong> que se destaca por su elegancia, tipado fuerte y capacidad de abstracción.<br>
+Aunque no es tan popular como C o Python, es ampliamente utilizado en ámbitos académicos y en el desarrollo de software confiable.<br>
+El objetivo de esta práctica es <strong>instalar el entorno de desarrollo de Haskell</strong> y analizar el funcionamiento de la aplicación <strong>TODO</strong>, la cual sirve como ejemplo introductorio al uso de este lenguaje.</p>
+<hr>
+<h2 id="1-instalación-del-entorno-de-haskell-con-ghcup">1. Instalación del entorno de Haskell con GHCup</h2>
+<h3 id="11-descarga-e-instalación-de-ghcup">1.1. Descarga e instalación de GHCup</h3>
+<p>El primer paso consiste en acceder a la página oficial de descargas de Haskell, donde se indica que todas las herramientas pueden instalarse mediante <strong>GHCup</strong>.<br>
+Para sistemas Windows, el proceso se realiza desde <strong>PowerShell (sin modo administrador)</strong> con el siguiente comando:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Set-ExecutionPolicy Bypass -Scope <span style="color:#66d9ef">Process</span> -Force; iex ((New-Object System.Net.WebClient).DownloadString(<span style="color:#e6db74">&#39;https://get-ghcup.haskell.org&#39;</span>))
+</span></span></code></pre></div><p>Este comando descarga e instala <strong>GHCup</strong>, una herramienta que gestiona el entorno de Haskell y permite instalar, actualizar o eliminar componentes como GHC, Cabal y Stack.</p>
+<hr>
+<h3 id="12-componentes-instalados">1.2. Componentes instalados</h3>
+<p>Durante la instalación, se agregan las siguientes herramientas:</p>
+<ul>
+<li><strong>GHCup</strong> → Herramienta principal de instalación y gestión del entorno.</li>
+<li><strong>GHC (Glasgow Haskell Compiler)</strong> → Compilador oficial de Haskell.</li>
+<li><strong>HLS (Haskell Language Server)</strong> → Proporciona soporte para editores y autocompletado.</li>
+<li><strong>Stack</strong> → Manejador de proyectos y dependencias, similar a <em>pip</em> en Python.</li>
+<li><strong>Cabal</strong> → Herramienta de construcción de proyectos (build tool).</li>
+<li><strong>Hugs</strong> → Intérprete interactivo de Haskell (opcional).</li>
+</ul>
+<p>Los archivos de código fuente de Haskell utilizan la extensión <code>.hs</code>.</p>
+<hr>
+<h3 id="13-verificación-de-la-instalación">1.3. Verificación de la instalación</h3>
+<p>Una vez completada la instalación, se recomienda abrir una nueva terminal y verificar las versiones de las herramientas con los siguientes comandos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ghc --version
+</span></span><span style="display:flex;"><span>stack --version
+</span></span><span style="display:flex;"><span>cabal --version
+</span></span></code></pre></div><p>Si las versiones aparecen correctamente, el entorno de Haskell está configurado con éxito.</p>
+<hr>
+<h2 id="2-aplicación-todo-en-haskell">2. Aplicación TODO en Haskell</h2>
+<h3 id="21-descripción-general">2.1. Descripción general</h3>
+<p>La aplicación <strong>TODO</strong> es un ejemplo práctico desarrollado en Haskell que demuestra cómo crear una aplicación de lista de tareas desde la línea de comandos.<br>
+Está basada en un tutorial del blog oficial de Haskell:</p>
+<blockquote>
+<p><em>&ldquo;How to use Haskell to build a TODO app with Stack.&rdquo;</em></p>
+</blockquote>
+<p>El propósito es mostrar cómo Haskell puede manejar operaciones de entrada/salida y persistencia de datos mediante funciones puras y tipos definidos.</p>
+<hr>
+<h3 id="22-estructura-del-proyecto">2.2. Estructura del proyecto</h3>
+<p>Al crear un nuevo proyecto con Stack, se utiliza el siguiente comando:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>stack new todo-app
+</span></span><span style="display:flex;"><span>cd todo-app
+</span></span><span style="display:flex;"><span>stack setup
+</span></span><span style="display:flex;"><span>stack build
+</span></span></code></pre></div><p>La estructura generada contiene los archivos principales:</p>
+<pre tabindex="0"><code>todo-app/
+├── app/
+│   └── Main.hs
+├── src/
+│   └── Todo.hs
+├── todo-app.cabal
+└── stack.yaml
+</code></pre><p>El archivo <code>Main.hs</code> contiene el punto de entrada del programa, mientras que <code>Todo.hs</code> define las funciones de manejo de tareas (agregar, listar y eliminar).</p>
+<hr>
+<h3 id="23-ejecución-de-la-aplicación">2.3. Ejecución de la aplicación</h3>
+<p>Para ejecutar el programa, se utiliza:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>stack run
+</span></span></code></pre></div><p>El usuario puede interactuar con la aplicación agregando tareas o listándolas, por ejemplo:</p>
+<pre tabindex="0"><code>1. Agregar tarea
+2. Ver tareas
+3. Eliminar tarea
+4. Salir
+</code></pre><p>Las tareas se almacenan en un archivo de texto, demostrando la gestión de archivos y funciones puras en Haskell.</p>
+<hr>
+<h2 id="3-conclusión">3. Conclusión</h2>
+<p>La instalación del entorno de Haskell mediante <strong>GHCup</strong> es un proceso automatizado y sencillo que permite disponer rápidamente de las herramientas necesarias para desarrollar en este lenguaje.<br>
+Haskell, aunque tiene una sintaxis y un paradigma distintos a lenguajes imperativos como C o Python, ofrece una gran potencia expresiva y robustez.</p>
+<p>La aplicación <strong>TODO</strong> sirve como un excelente punto de partida para entender cómo los conceptos funcionales (como la inmutabilidad y la composición de funciones) se aplican en proyectos reales.<br>
+En conclusión, esta práctica proporciona una visión introductoria al paradigma funcional y al ecosistema de Haskell, promoviendo una forma diferente y más matemática de pensar la programación.</p>
+<hr>
+<p><strong>Autor:</strong> Gael Flores Cañedo<br>
+<strong>Matrícula:</strong> 376339<br>
+<strong>Universidad Autónoma de Baja California (UABC)</strong><br>
+<strong>Materia:</strong> Paradigmas de la Programación</p>
+<ul class="pa0">
+  
+   <li class="list di">
+     <a href="/tags/haskell/" class="link f5 grow br-pill ba ph3 pv2 mb2 dib black sans-serif no-underline">Haskell</a>
+   </li>
+  
+   <li class="list di">
+     <a href="/tags/ghcup/" class="link f5 grow br-pill ba ph3 pv2 mb2 dib black sans-serif no-underline">GHCup</a>
+   </li>
+  
+   <li class="list di">
+     <a href="/tags/instalaci%C3%B3n/" class="link f5 grow br-pill ba ph3 pv2 mb2 dib black sans-serif no-underline">Instalación</a>
+   </li>
+  
+   <li class="list di">
+     <a href="/tags/programaci%C3%B3n-funcional/" class="link f5 grow br-pill ba ph3 pv2 mb2 dib black sans-serif no-underline">Programación Funcional</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1313/" >
+    &copy;  Blog de Gael 2025 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

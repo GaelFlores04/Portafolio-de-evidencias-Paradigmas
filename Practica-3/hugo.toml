@@ -1,0 +1,61 @@
+baseURL = "https://GaelFlores04.github.io/"
+languageCode = "es-mx"
+title = "Blog de Gael"
+theme = "PaperMod"
+
+enableInlineShortcodes = true
+enableRobotsTXT = true
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+canonifyURLs = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[pagination]
+  pagerSize = 6
+
+[params]
+  author = "Gael Flores Cañedo"
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowCodeCopyButtons = true
+  ShowRssButtonInSectionTermList = true
+  UseHugoToc = true
+  comments = false
+  defaultTheme = "auto"
+  disableThemeToggle = false
+
+  [params.homeInfoParams]
+    Title = "Bienvenido al Blog de Gael"
+    Content = """
+Estudiante de Ingeniería en Software y Tecnologías Emergentes.
+Aquí encontrarás mis prácticas, reportes, proyectos y material académico.
+"""
+
+[menu]
+
+  [[menu.main]]
+    identifier = "inicio"
+    name = "Inicio"
+    url = "/"
+    weight = 1
+
+  [[menu.main]]
+    identifier = "practicas"
+    name = "Prácticas"
+    url = "/categories/practicas/"
+    weight = 2
+
+  [[menu.main]]
+    identifier = "about"
+    name = "Mi GitHub"
+    url = "https://github.com/GaelFlores04"
+    weight = 10
+
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"

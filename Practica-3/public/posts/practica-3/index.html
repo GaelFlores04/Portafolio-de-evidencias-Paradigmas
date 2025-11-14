@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Practica 3:Instalación del entorno de desarrollo Haskell | Blog de Gael</title>
+<meta name="keywords" content="Haskell, GHCup, Instalación, Programación funcional">
+<meta name="description" content="Reporte sobre la instalación del entorno de desarrollo Haskell utilizando GHCup, y análisis de la aplicación TODO en Haskell.">
+<meta name="author" content="Gael Flores Cañedo">
+<link rel="canonical" href="http://localhost:1313/posts/practica-3/">
+<link crossorigin="anonymous" href="http://localhost:1313/assets/css/stylesheet.fd5566c526ae48aadabd950798a2dc3568536401560eae5caac3765a42a9e7b5.css" integrity="sha256-/VVmxSauSKravZUHmKLcNWhTZAFWDq5cqsN2WkKp57U=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/practica-3/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Blog de Gael (Alt + H)">Blog de Gael</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/" title="Inicio">
+                    <span>Inicio</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/categories/practicas/" title="Prácticas">
+                    <span>Prácticas</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/GaelFlores04" title="Mi GitHub">
+                    <span>Mi GitHub</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Practica 3:Instalación del entorno de desarrollo Haskell
+    </h1>
+    <div class="post-meta"><span title='2025-11-07 00:00:00 +0000 UTC'>November 7, 2025</span>&nbsp;·&nbsp;<span>3 min</span>&nbsp;·&nbsp;<span>Gael Flores Cañedo</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="instalación-del-entorno-de-desarrollo-haskell">Instalación del entorno de desarrollo Haskell<a hidden class="anchor" aria-hidden="true" href="#instalación-del-entorno-de-desarrollo-haskell">#</a></h1>
+<h2 id="introducción">Introducción<a hidden class="anchor" aria-hidden="true" href="#introducción">#</a></h2>
+<p>Haskell es un lenguaje de programación <strong>puramente funcional</strong> que se destaca por su elegancia, tipado fuerte y capacidad de abstracción.<br>
+Aunque no es tan popular como C o Python, es ampliamente utilizado en ámbitos académicos y en el desarrollo de software confiable.<br>
+El objetivo de esta práctica es <strong>instalar el entorno de desarrollo de Haskell</strong> y analizar el funcionamiento de la aplicación <strong>TODO</strong>, la cual sirve como ejemplo introductorio al uso de este lenguaje.</p>
+<hr>
+<h2 id="1-instalación-del-entorno-de-haskell-con-ghcup">1. Instalación del entorno de Haskell con GHCup<a hidden class="anchor" aria-hidden="true" href="#1-instalación-del-entorno-de-haskell-con-ghcup">#</a></h2>
+<h3 id="11-descarga-e-instalación-de-ghcup">1.1. Descarga e instalación de GHCup<a hidden class="anchor" aria-hidden="true" href="#11-descarga-e-instalación-de-ghcup">#</a></h3>
+<p>El primer paso consiste en acceder a la página oficial de descargas de Haskell, donde se indica que todas las herramientas pueden instalarse mediante <strong>GHCup</strong>.<br>
+Para sistemas Windows, el proceso se realiza desde <strong>PowerShell (sin modo administrador)</strong> con el siguiente comando:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Set-ExecutionPolicy Bypass -Scope <span style="color:#66d9ef">Process</span> -Force; iex ((New-Object System.Net.WebClient).DownloadString(<span style="color:#e6db74">&#39;https://get-ghcup.haskell.org&#39;</span>))
+</span></span></code></pre></div><p>Este comando descarga e instala <strong>GHCup</strong>, una herramienta que gestiona el entorno de Haskell y permite instalar, actualizar o eliminar componentes como GHC, Cabal y Stack.</p>
+<hr>
+<h3 id="12-componentes-instalados">1.2. Componentes instalados<a hidden class="anchor" aria-hidden="true" href="#12-componentes-instalados">#</a></h3>
+<p>Durante la instalación, se agregan las siguientes herramientas:</p>
+<ul>
+<li><strong>GHCup</strong> → Herramienta principal de instalación y gestión del entorno.</li>
+<li><strong>GHC (Glasgow Haskell Compiler)</strong> → Compilador oficial de Haskell.</li>
+<li><strong>HLS (Haskell Language Server)</strong> → Proporciona soporte para editores y autocompletado.</li>
+<li><strong>Stack</strong> → Manejador de proyectos y dependencias, similar a <em>pip</em> en Python.</li>
+<li><strong>Cabal</strong> → Herramienta de construcción de proyectos (build tool).</li>
+<li><strong>Hugs</strong> → Intérprete interactivo de Haskell (opcional).</li>
+</ul>
+<p>Los archivos de código fuente de Haskell utilizan la extensión <code>.hs</code>.</p>
+<hr>
+<h3 id="13-verificación-de-la-instalación">1.3. Verificación de la instalación<a hidden class="anchor" aria-hidden="true" href="#13-verificación-de-la-instalación">#</a></h3>
+<p>Una vez completada la instalación, se recomienda abrir una nueva terminal y verificar las versiones de las herramientas con los siguientes comandos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ghc --version
+</span></span><span style="display:flex;"><span>stack --version
+</span></span><span style="display:flex;"><span>cabal --version
+</span></span></code></pre></div><p>Si las versiones aparecen correctamente, el entorno de Haskell está configurado con éxito.</p>
+<hr>
+<h2 id="2-aplicación-todo-en-haskell">2. Aplicación TODO en Haskell<a hidden class="anchor" aria-hidden="true" href="#2-aplicación-todo-en-haskell">#</a></h2>
+<h3 id="21-descripción-general">2.1. Descripción general<a hidden class="anchor" aria-hidden="true" href="#21-descripción-general">#</a></h3>
+<p>La aplicación <strong>TODO</strong> es un ejemplo práctico desarrollado en Haskell que demuestra cómo crear una aplicación de lista de tareas desde la línea de comandos.<br>
+Está basada en un tutorial del blog oficial de Haskell:</p>
+<blockquote>
+<p><em>&ldquo;How to use Haskell to build a TODO app with Stack.&rdquo;</em></p>
+</blockquote>
+<p>El propósito es mostrar cómo Haskell puede manejar operaciones de entrada/salida y persistencia de datos mediante funciones puras y tipos definidos.</p>
+<hr>
+<h3 id="22-estructura-del-proyecto">2.2. Estructura del proyecto<a hidden class="anchor" aria-hidden="true" href="#22-estructura-del-proyecto">#</a></h3>
+<p>Al crear un nuevo proyecto con Stack, se utiliza el siguiente comando:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>stack new todo-app
+</span></span><span style="display:flex;"><span>cd todo-app
+</span></span><span style="display:flex;"><span>stack setup
+</span></span><span style="display:flex;"><span>stack build
+</span></span></code></pre></div><p>La estructura generada contiene los archivos principales:</p>
+<pre tabindex="0"><code>todo-app/
+├── app/
+│   └── Main.hs
+├── src/
+│   └── Todo.hs
+├── todo-app.cabal
+└── stack.yaml
+</code></pre><p>El archivo <code>Main.hs</code> contiene el punto de entrada del programa, mientras que <code>Todo.hs</code> define las funciones de manejo de tareas (agregar, listar y eliminar).</p>
+<hr>
+<h3 id="23-ejecución-de-la-aplicación">2.3. Ejecución de la aplicación<a hidden class="anchor" aria-hidden="true" href="#23-ejecución-de-la-aplicación">#</a></h3>
+<p>Para ejecutar el programa, se utiliza:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>stack run
+</span></span></code></pre></div><p>El usuario puede interactuar con la aplicación agregando tareas o listándolas, por ejemplo:</p>
+<pre tabindex="0"><code>1. Agregar tarea
+2. Ver tareas
+3. Eliminar tarea
+4. Salir
+</code></pre><p>Las tareas se almacenan en un archivo de texto, demostrando la gestión de archivos y funciones puras en Haskell.</p>
+<hr>
+<h2 id="3-conclusión">3. Conclusión<a hidden class="anchor" aria-hidden="true" href="#3-conclusión">#</a></h2>
+<p>La instalación del entorno de Haskell mediante <strong>GHCup</strong> es un proceso automatizado y sencillo que permite disponer rápidamente de las herramientas necesarias para desarrollar en este lenguaje.<br>
+Haskell, aunque tiene una sintaxis y un paradigma distintos a lenguajes imperativos como C o Python, ofrece una gran potencia expresiva y robustez.</p>
+<p>La aplicación <strong>TODO</strong> sirve como un excelente punto de partida para entender cómo los conceptos funcionales (como la inmutabilidad y la composición de funciones) se aplican en proyectos reales.<br>
+En conclusión, esta práctica proporciona una visión introductoria al paradigma funcional y al ecosistema de Haskell, promoviendo una forma diferente y más matemática de pensar la programación.</p>
+<hr>
+<p><strong>Autor:</strong> Gael Flores Cañedo<br>
+<strong>Matrícula:</strong> 376339<br>
+<strong>Universidad Autónoma de Baja California (UABC)</strong><br>
+<strong>Materia:</strong> Paradigmas de la Programación</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/haskell/">Haskell</a></li>
+      <li><a href="http://localhost:1313/tags/ghcup/">GHCup</a></li>
+      <li><a href="http://localhost:1313/tags/instalaci%C3%B3n/">Instalación</a></li>
+      <li><a href="http://localhost:1313/tags/programaci%C3%B3n-funcional/">Programación Funcional</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/bienvenida/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Bienvenida</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/practica-2/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Practica 2: Programación Orientada a Objetos</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://localhost:1313/">Blog de Gael</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
