@@ -5,8 +5,8 @@ draft: false
 
 # **Reporte: Uso de Markdown, Git/GitHub, Hugo y GitHub Actions**
 **Autor:** Gael Flores Cañedo  
-**Portafolio en GitHub:** *(agregar enlace)*  
-**Página en GitHub Pages:** *(agregar enlace)*  
+**Portafolio en GitHub:** [portafolio-PP](https://github.com/GaelFlores04/Portafolio-de-evidencias-Paradigmas)
+**Página en GitHub Pages:** [GaelFlores04](https://github.com/GaelFlores04)
 
 ---
 
